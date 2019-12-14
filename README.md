@@ -35,6 +35,24 @@ recommended location for storing the hcloud API token.
 It's also possible to provide a `configMapGenerator` called `hcloud-ip-floater-config-env` with the non-secret options
 listed in the [configuration options](#configuration-options) section below.
 
+## MetalLB Integration (optional)
+
+The controller can optionally provide MetalLB with the list of known floating IPs from Hetzner Cloud. This enables
+MetalLB to automatically learn of new floating IPs and start assigning them to k8s services.
+
+When provided with the `--export-to-metallb-config` option (see [configuration options](#configuration-options) below), `hcloud-ip-floater` will
+export its known floating IPs into a MetalLB `ConfigMap`, adopting MetalLB's defaults for namespace and `ConfigMap` name.
+The floating IPs will be added to an address pool called "hcloud-ip-floater", leaving the remaining
+configuration as-is.
+
+To make use of this feature, additional RBAC rules are needed. If MetalLB is running with its default configuration,
+the following `kustomization.yaml` should suffice:
+
+```yaml
+```
+
+The list of floating IPs passed on to MetalLB is also affected by `--floating-label-selector` (see [configuration options](#configuration-options) below).
+
 ## Configuration options
 
 Either as command line arguments or environment variables.
