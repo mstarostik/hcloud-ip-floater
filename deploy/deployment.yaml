@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hcloud-ip-floater
+  namespace: hcloud-ip-floater
   labels:
     app.kubernetes.io/name: hcloud-ip-floater
 spec:
